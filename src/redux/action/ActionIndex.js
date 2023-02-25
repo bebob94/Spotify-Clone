@@ -4,7 +4,7 @@ export const GET_ROCK_CARDS = "GET_ROCK_CARDS";
 export const GET_CARDS_ERROR = "GET_CARDS_ERROR";
 export const IS_LOADING_OFF = "IS_LOADING_OFF";
 export const CARD_SELECTED = "CARD_SELECTED";
-
+export const SEARCH_RESULT = "SEARCHRESULT";
 export const SpotifyFetch = (endPoint) => {
   return async (dispatch, getState) => {
     try {

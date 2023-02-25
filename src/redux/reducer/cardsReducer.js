@@ -5,6 +5,7 @@ import {
   GET_POP_CARDS,
   GET_ROCK_CARDS,
   IS_LOADING_OFF,
+  SEARCH_RESULT,
 } from "../action/ActionIndex";
 
 const initialState = {
@@ -13,9 +14,10 @@ const initialState = {
     pop: [],
     hiphop: [],
   },
+  selectedCard: {},
   hasError: false,
   isLoading: true,
-  cardSelected: null,
+  searchResult: "",
 };
 
 const CardsReducer = (state = initialState, action) => {
@@ -49,7 +51,12 @@ const CardsReducer = (state = initialState, action) => {
     case CARD_SELECTED:
       return {
         ...state,
-        cardSelected: action.payload,
+        selectedCard: action.payload,
+      };
+    case SEARCH_RESULT:
+      return {
+        ...state,
+        searchResult: action.payload,
       };
     default:
       return state;

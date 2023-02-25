@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { GET_CARDS_ERROR, IS_LOADING_OFF } from "../redux/action/ActionIndex";
 import IsLoading from "./IsLoading";
 import Error from "./Error";
 import { Link } from "react-router-dom";
 
-const Artist = () => {
-  const selectedCard = useSelector((state) => state.cardData.selectedCard);
-
+const SearchResaults = () => {
+  const searchResult = useSelector((state) => state.cardData.searchResult);
   const hasError = useSelector((state) => state.cardData.hasError);
   const isLoading = useSelector((state) => state.cardData.isLoading);
 
@@ -20,7 +19,7 @@ const Artist = () => {
     const fetchArtist = async () => {
       try {
         let response = await fetch(
-          `https://striveschool-api.herokuapp.com/api/deezer/search?q=${selectedCard.artist.name}`
+          `https://striveschool-api.herokuapp.com/api/deezer/search?q=${searchResult}`
         );
         if (response.ok) {
           let data = await response.json();
@@ -49,7 +48,7 @@ const Artist = () => {
     };
     fetchArtist();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchResult]);
 
   return (
     <Container xs={12} md={12} className=" offset-md-3 mainPage">
@@ -75,31 +74,12 @@ const Artist = () => {
           </a>
         </Col>
       </Row>
-      <Row>
-        <Col xs={12} md={10} className=" mt-5">
-          <h2 className="titleMain">{selectedCard.artist.name}</h2>
-          <div id="followers">{selectedCard.rank} Followers</div>
-          <div className="d-flex justify-content-center" id="button-container">
-            <button
-              className="btn btn-success mr-2 mainButton d-none"
-              id="playButton"
-            >
-              PLAY
-            </button>
-            <button
-              className="btn btn-outline-light mainButton d-none"
-              id="followButton"
-            >
-              FOLLOW
-            </button>
-          </div>
-        </Col>
-      </Row>
+
       <Row className=" mb-3">
         <Col xs={12} md={12} className="   p-0">
-          <div className="mt-4 d-flex justify-content-start">
-            <h2 className="text-white font-weight-bold">Tracks</h2>
-          </div>
+          <h2 className="text-white font-weight-bold mt-4">Search Results</h2>
+          <h4 className="mt-4">{searchResult.toUpperCase()} </h4>
+
           <Row id="apiLoaded">
             {isLoading ? (
               <IsLoading />
@@ -126,4 +106,4 @@ const Artist = () => {
     </Container>
   );
 };
-export default Artist;
+export default SearchResaults;
