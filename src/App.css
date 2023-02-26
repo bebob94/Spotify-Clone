@@ -248,3 +248,7 @@ a:hover {
   color: white;
   text-decoration: none;
 }
+
+.myStar:hover {
+  opacity: 0.5;
+}

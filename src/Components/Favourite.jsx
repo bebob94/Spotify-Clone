@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { BiStar } from "react-icons/bi";
+import { BiStar, BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IS_PLAY_CARD,
@@ -37,21 +37,24 @@ const Favourite = () => {
       <Row className="mt-5">
         {favourite?.map((track, i) => (
           <>
-            <Col key={track.id} md={1} className="mt-4">
-              <BiStar
+            <Col key={track.id} md={1} className="mt-5 ">
+              <BiTrash
                 style={{
-                  fontSize: "1.2em",
+                  fontSize: "1.8em",
+                  color: "green",
                 }}
+                className="myStar"
                 onClick={() => {
                   dispatch({
                     type: REMOVE_FROM_FAVORITE,
-                    payload: favourite.id,
+                    payload: i,
                   });
                 }}
               />
             </Col>
             <Col md={2}>
               <img
+                className="mt-4"
                 src={track.album.cover_medium}
                 alt={track.title}
                 style={{ height: "80px", width: "80px" }}

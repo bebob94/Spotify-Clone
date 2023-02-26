@@ -21,10 +21,19 @@ const Album = () => {
 
   const dispatch = useDispatch();
 
-  const [songs, setSongs] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [selectedStarId, setSelectedStarId] = useState(null);
+  const [songs, setSongs] = useState([]);
 
+  const [isFavorite, setIsFavorite] = useState(
+    songs?.length > 0 ? songs.length.fill(false) : []
+  );
+
+  const changeStar = (i) => {
+    setIsFavorite((prevState) => {
+      const newFavorite = [...prevState];
+      newFavorite[i] = !newFavorite[i];
+      return newFavorite;
+    });
+  };
   function formatDuration(duration) {
     const minutes = Math.floor(duration / 60);
     const seconds = duration % 60;
@@ -44,7 +53,6 @@ const Album = () => {
           dispatch({
             type: IS_LOADING_OFF,
           });
-          console.log(songs);
         } else {
           dispatch({
             type: IS_LOADING_OFF,
@@ -63,6 +71,7 @@ const Album = () => {
       }
     };
     fetchAlbum();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,7 +111,7 @@ const Album = () => {
           <div className="mt-4 text-center">
             <button
               id="btnPlay"
-              class="btn btn-success"
+              className="btn btn-success"
               type="button"
               onClick={() => {
                 dispatch({
@@ -125,21 +134,21 @@ const Album = () => {
           ) : hasError ? (
             <Error />
           ) : (
-            songs?.tracks?.data?.map((singl) => (
+            songs?.tracks?.data?.map((singl, i) => (
               <Row key={singl.id} className="mt-5">
                 <Col xs={5}>{singl.title}</Col>
                 <Col xs={6}>
                   <BiStar
                     style={{
                       fontSize: "1.2em",
-                      color: isFavorite ? "green" : "inherit",
+                      color: isFavorite?.[i] ? "green" : "inherit",
                     }}
                     onClick={() => {
                       dispatch({
                         type: MY_FAVORITE,
                         payload: singl,
                       });
-                      setIsFavorite(!isFavorite);
+                      changeStar(i);
                     }}
                   />
                 </Col>

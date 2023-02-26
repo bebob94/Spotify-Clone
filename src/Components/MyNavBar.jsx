@@ -9,10 +9,23 @@ import { useState } from "react";
 const MyNavBar = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
   };
+
+  const handleKeyUp = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      dispatch({
+        type: SEARCH_RESULT,
+        payload: search,
+      });
+      navigate("/SearchResults");
+    }
+  };
+
   return (
     <Navbar bg="navbar" variant="white" expand="md" fixed="left">
       <Navbar.Brand href="index.html">
@@ -46,6 +59,7 @@ const MyNavBar = () => {
             <Button
               variant="outline-secondary"
               size="sm"
+              onKeyUp={handleKeyUp}
               onClick={() =>
                 dispatch({
                   type: SEARCH_RESULT,
