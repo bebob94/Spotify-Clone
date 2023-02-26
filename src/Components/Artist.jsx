@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { GET_CARDS_ERROR, IS_LOADING_OFF } from "../redux/action/ActionIndex";
+import {
+  GET_CARDS_ERROR,
+  IS_LOADING_OFF,
+  IS_PLAY_CARD,
+  PLAY_CARD,
+} from "../redux/action/ActionIndex";
 import IsLoading from "./IsLoading";
 import Error from "./Error";
 import { Link } from "react-router-dom";
@@ -54,10 +59,7 @@ const Artist = () => {
   return (
     <Container xs={12} md={12} className=" offset-md-3 mainPage">
       <Row className="mb-3">
-        <Col
-          md={{ span: 6, offset: 1 }}
-          className="mainLinks d-none d-md-flex "
-        >
+        <Col className="mainLinks d-none d-md-flex ">
           <a href="#" className="mx-2">
             TRENDING
           </a>
@@ -81,13 +83,23 @@ const Artist = () => {
           <div id="followers">{selectedCard.rank} Followers</div>
           <div className="d-flex justify-content-center" id="button-container">
             <button
-              className="btn btn-success mr-2 mainButton d-none"
+              className="btn btn-success mr-2 mainButton "
               id="playButton"
+              onClick={() => {
+                dispatch({
+                  type: PLAY_CARD,
+                  payload: selectedCard,
+                });
+                dispatch({
+                  type: IS_PLAY_CARD,
+                  payload: true,
+                });
+              }}
             >
               PLAY
             </button>
             <button
-              className="btn btn-outline-light mainButton d-none"
+              className="btn btn-outline-light mainButton "
               id="followButton"
             >
               FOLLOW

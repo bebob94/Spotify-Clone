@@ -27,9 +27,11 @@ const MyNavBar = () => {
           <Link to={"/"}>
             <FontAwesomeIcon icon={faHome} size="lg" /> Home
           </Link>
-          <Nav.Link href="#">
-            <FontAwesomeIcon icon={faBookOpen} size="lg" /> Your Library
-          </Nav.Link>
+          <Nav>
+            <Link to={"/Favourite"}>
+              <FontAwesomeIcon icon={faBookOpen} size="lg" /> Your Library
+            </Link>
+          </Nav>
         </Nav>
         <Form className="input-group">
           <FormControl

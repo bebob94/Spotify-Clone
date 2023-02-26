@@ -7,7 +7,7 @@ const AllCards = () => {
   return (
     <Container fluid className="mainPage offset-md-3">
       <Row>
-        <Col md={{ span: 6, offset: 1 }} className="mainLinks d-none d-md-flex">
+        <Col className="mainLinks d-none d-md-flex">
           <a href="#">TRENDING</a>
           <a href="#">PODCAST</a>
           <a href="#">MOODS AND GENRES</a>

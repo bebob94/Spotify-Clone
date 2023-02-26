@@ -3,6 +3,7 @@ import "./App.css";
 import Album from "./Components/Album";
 import AllCards from "./Components/AllCards";
 import Artist from "./Components/Artist";
+import Favourite from "./Components/Favourite";
 import MyNavBar from "./Components/MyNavBar";
 import Player from "./Components/Player";
 import SearchResaults from "./Components/SearchResults";
@@ -17,6 +18,7 @@ function App() {
           <Route path="/Album" element={<Album />} />
           <Route path="/Artist" element={<Artist />} />
           <Route path="/SearchResults" element={<SearchResaults />} />
+          <Route path="/Favourite" element={<Favourite />} />
         </Routes>
         <Player />
       </BrowserRouter>

@@ -1,10 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { GET_CARDS_ERROR, IS_LOADING_OFF } from "../redux/action/ActionIndex";
+import {
+  GET_CARDS_ERROR,
+  IS_LOADING_OFF,
+  IS_PLAY_CARD,
+  MY_FAVORITE,
+  PLAY_CARD,
+} from "../redux/action/ActionIndex";
 import IsLoading from "./IsLoading";
 import Error from "./Error";
 import { Link } from "react-router-dom";
+import { BiStar } from "react-icons/bi";
 
 const Album = () => {
   const selectedCard = useSelector((state) => state.cardData.selectedCard);
@@ -15,6 +22,8 @@ const Album = () => {
   const dispatch = useDispatch();
 
   const [songs, setSongs] = useState({});
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [selectedStarId, setSelectedStarId] = useState(null);
 
   function formatDuration(duration) {
     const minutes = Math.floor(duration / 60);
@@ -60,7 +69,7 @@ const Album = () => {
   return (
     <Container className="col-12 col-md-9 offset-md-3 mainPage">
       <Row className="mb-3">
-        <Col md={{ span: 6, offset: 1 }} className="mainLinks d-none d-md-flex">
+        <Col className="mainLinks d-none d-md-flex">
           <a href="#" className="mx-2">
             TRENDING
           </a>
@@ -86,10 +95,29 @@ const Album = () => {
             alt={selectedCard.album.title_short}
           />
 
-          <p className="text-truncate mt-4">{selectedCard.album.title} </p>
+          <h3 className="text-truncate mt-4">{selectedCard.album.title} </h3>
           <Link to={"/Artist"}>
             <p className="text-truncate mt-2">{selectedCard.artist.name} </p>
           </Link>
+          <div className="mt-4 text-center">
+            <button
+              id="btnPlay"
+              class="btn btn-success"
+              type="button"
+              onClick={() => {
+                dispatch({
+                  type: PLAY_CARD,
+                  payload: selectedCard,
+                });
+                dispatch({
+                  type: IS_PLAY_CARD,
+                  payload: true,
+                });
+              }}
+            >
+              Play
+            </button>
+          </div>
         </Col>
         <Col xs={8} className=" p-5">
           {isLoading ? (
@@ -99,8 +127,23 @@ const Album = () => {
           ) : (
             songs?.tracks?.data?.map((singl) => (
               <Row key={singl.id} className="mt-5">
-                <Col xs={10}>{singl.title}</Col>
-                <Col xs={2}>{formatDuration(singl.duration)}</Col>
+                <Col xs={5}>{singl.title}</Col>
+                <Col xs={6}>
+                  <BiStar
+                    style={{
+                      fontSize: "1.2em",
+                      color: isFavorite ? "green" : "inherit",
+                    }}
+                    onClick={() => {
+                      dispatch({
+                        type: MY_FAVORITE,
+                        payload: singl,
+                      });
+                      setIsFavorite(!isFavorite);
+                    }}
+                  />
+                </Col>
+                <Col xs={1}>{formatDuration(singl.duration)}</Col>
               </Row>
             ))
           )}

@@ -1,11 +1,32 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Player = () => {
+  const cardPlay = useSelector((state) => state.cardData.playCard);
+  const isCardPlay = useSelector((state) => state.cardData.isPlayCard);
+  console.log(cardPlay);
   return (
     <Container fluid className="fixed-bottom bg-container pt-1">
       <Row>
-        <Col lg={10} className="offset-lg-2">
+        <Col lg={1} className="offset-lg-2">
+          {isCardPlay ? (
+            <Col className="d-flex mt-3">
+              <img
+                src={cardPlay?.album?.cover_big}
+                alt={cardPlay.title}
+                style={{ height: "50px" }}
+              />
+              <p className="ml-2 mt-3">{cardPlay.title}</p>
+            </Col>
+          ) : (
+            <Col className="d-none">
+              <img src="" alt="" />
+              <p></p>
+            </Col>
+          )}
+        </Col>
+        <Col lg={8}>
           <Row>
             <Col
               xs={6}

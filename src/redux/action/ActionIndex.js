@@ -5,6 +5,11 @@ export const GET_CARDS_ERROR = "GET_CARDS_ERROR";
 export const IS_LOADING_OFF = "IS_LOADING_OFF";
 export const CARD_SELECTED = "CARD_SELECTED";
 export const SEARCH_RESULT = "SEARCHRESULT";
+export const PLAY_CARD = "PLAY_CARD";
+export const IS_PLAY_CARD = "IS_PLAY_CARD";
+export const MY_FAVORITE = "MY_FAVORITE";
+export const REMOVE_FROM_FAVORITE = "REMOVE_FROM_FAVORITE";
+
 export const SpotifyFetch = (endPoint) => {
   return async (dispatch, getState) => {
     try {
