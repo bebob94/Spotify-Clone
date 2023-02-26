@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";

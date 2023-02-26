@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBookOpen } from "@fortawesome/free-solid-svg-icons";
@@ -6,24 +7,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { SEARCH_RESULT } from "../redux/action/ActionIndex";
 import { useState } from "react";
+
 const MyNavBar = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearch(e.target.value);
+    dispatch({
+      type: SEARCH_RESULT,
+      payload: search,
+    });
+    navigate("/SearchResults");
   };
 
-  const handleKeyUp = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      dispatch({
-        type: SEARCH_RESULT,
-        payload: search,
-      });
-      navigate("/SearchResults");
-    }
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
   };
 
   return (
@@ -46,31 +46,28 @@ const MyNavBar = () => {
             </Link>
           </Nav>
         </Nav>
-        <Form className="input-group">
+        <Form className="input-group" onSubmit={handleSearch}>
           <FormControl
             type="text"
             placeholder="Search"
             className="mr-sm-2"
             id="searchField"
-            onChange={handleSearch}
-          />
-          <Link to={"/SearchResults"}>
-            {" "}
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onKeyUp={handleKeyUp}
-              onClick={() =>
-                dispatch({
-                  type: SEARCH_RESULT,
-                  payload: search,
-                })
+            value={search}
+            onChange={handleInputChange}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(e);
               }
-              id="button-addon1"
-            >
-              GO
-            </Button>
-          </Link>
+            }}
+          />
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={handleSearch}
+            id="button-addon1"
+          >
+            GO
+          </Button>
         </Form>
       </Navbar.Collapse>
       <div className="nav-btn">
